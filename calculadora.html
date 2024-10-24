@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Deudas</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Gaegu:wght@400;700&family=Sawarabi+Gothic&display=swap" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <nav class="navbar navbar-expand-lg navbar-light bg-light">
+        <div class="container-fluid">
+            <a class="navbar-brand" href="#">Calculadora de Créditos</a>
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <div class="collapse navbar-collapse" id="navbarNav">
+                <ul class="navbar-nav ms-auto">
+                    <li class="nav-item">
+                        <a class="nav-link active" aria-current="page" href="#">Inicio</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="https://files.catbox.moe/uuxelx.pdf">Manual de usuario</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="#">Manual de administrador</a>
+                    </li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container mt-4 small-container">
+        <h1 class="text-center">Calculadora de Creditos</h1>
+        <div class="card shadow p-3 mb-5 bg-body rounded">
+            <table class="styled-table">
+                <tr>
+                    <td class="label-cell">Número de Contrato</td><td id="mostrarNumeroContrato"> </td>
+                </tr>
+                <tr>
+                    <td class="label-cell">Crédito del vehículo</td><td id="credito">$129000</td>
+                </tr>
+                <tr>
+                    <td class="label-cell">Enganche</td><td id="enganche">$0</td>
+                </tr>
+                <tr>
+                    <td class="label-cell">IVA (%)</td><td id="iva">16%</td>
+                </tr>
+                <tr>
+                    <td class="label-cell">Tasa de interés anual</td><td id="tasa">13%</td>
+                </tr>
+                <tr>
+                    <td class="label-cell">Plazo (meses)</td><td id="plazo">60</td>
+                </tr>
+    
+                <tr>
+                    <td class="label-cell">Fecha</td>
+                    <td> 
+                        <input type="date" id="start" name="trip-start" value="2024-10-18" min="2024-10-18" max="2030-31-12" />
+                    </td>
+                </tr>
+            </table>
+        </div>
+    </div>
+
+    <div class="d-grid gap-2 d-md-flex justify-content-md-center mb-4">
+        <audio id="audio" src="https://files.catbox.moe/vbhikv.mp3" autostart="false"></audio>
+        <button class="btn btn-custom btn-credito" onclick="abrirDialogoCredito()">Modificar Crédito</button>
+        <button class="btn btn-custom btn-enganche" onclick="modificarEnganche()">Modificar Enganche</button>
+        <button class="btn btn-custom btn-tasa" onclick="modificarTasa()">Modificar Tasa</button>
+        <button class="btn btn-custom btn-plazo" onclick="modificarPlazo()">Modificar Plazo</button>
+        <button class="btn btn-custom btn-amortizacion" onclick="generarTablaAmortizacion()">Generar Tabla de Amortización</button>
+    </div>        
+
+    <div id="tablaAmortizacion"></div>
+
+    <div id="dialog" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <p>Ingrese el nuevo valor para CREDITO en pesos (sin signo $):</p>
+                    <input type="text" id="nuevoCredito" class="form-control">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="guardarCredito">Aceptar</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="dialogEnganche" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <p>Ingrese el nuevo valor para ENGANCHE en pesos (sin signo $):</p>
+                    <input type="text" id="nuevoEnganche" class="form-control">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="guardarEnganche">Aceptar</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="dialogTasa" class="modal" tabindex="-1"role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <p>Ingrese el nuevo valor para la TASA de interés:</p>
+                    <input type="text" id="nuevoTasa" class="form-control">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="guardarTasa">Aceptar</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="dialogPlazo" class="modal" tabindex="-1" role="dialog">
+        <div class="modal-dialog" role="document">
+            <div class="modal-content">
+                <div class="modal-body">
+                    <p>Ingrese el nuevo valor para el PLAZO mensual:</p>
+                    <input type="text" id="nuevoPlazo" class="form-control">
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-primary" id="guardarPlazo">Aceptar</button>
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Cancelar</button>
+                </div>
+            </div>
+        </div>
+      </div>
+    
+  
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

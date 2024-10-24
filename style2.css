@@ -1,0 +1,32 @@
+body {
+    font-family: "Sawarabi Gothic", sans-serif; 
+    font-weight: 400;
+    font-style: normal;
+    font-size: 15px;
+    color: #a3a3a3;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100vh;
+    background-color: #FFFFFF;
+    margin: 0;
+}
+.content {
+    text-align: center;
+    background: #FFFFFF;
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+#enterLink {
+    text-decoration: none;
+    display: inline-block;
+    color: #777777;
+    padding: 10px 20px;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+    font-size: 30px;
+}
+#enterLink:hover {
+    color: #b2c3d6;
+}
